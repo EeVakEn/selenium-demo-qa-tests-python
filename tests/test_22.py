@@ -28,9 +28,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service 
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.chrome.service import Service
-from selenium_recaptcha_solver import RecaptchaSolver
 
 
 class TestDemoQABookStore(unittest.TestCase):
@@ -43,8 +43,7 @@ class TestDemoQABookStore(unittest.TestCase):
         options.add_argument(f'--user-agent={test_ua}')
         options.add_argument('--no-sandbox')
         options.add_argument("--disable-extensions")
-        self.driver = webdriver.Chrome(options=options) 
-        self.solver = RecaptchaSolver(driver=self.driver)
+        self.driver = webdriver.Chrome(options=options, service=Service(executable_path='/usr/bin/chromedriver')) 
         self.driver.get("https://demoqa.com/")
         self.wait = WebDriverWait(self.driver, 10)
 

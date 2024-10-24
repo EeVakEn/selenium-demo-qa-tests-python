@@ -10,6 +10,7 @@ import time
 import unittest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -20,7 +21,7 @@ class TestUploadAndDownload(unittest.TestCase):
     def setUp(self):
         options = Options()
         options.page_load_strategy = 'eager'
-        self.driver = webdriver.Chrome(options=options)  # ChromeDriver
+        self.driver = webdriver.Chrome(options=options, service=Service(executable_path='/usr/bin/chromedriver'))  # ChromeDriver
         self.driver.get("https://demoqa.com/")
         self.wait = WebDriverWait(self.driver, 10)
 
@@ -40,15 +41,12 @@ class TestUploadAndDownload(unittest.TestCase):
         file_path = os.path.abspath(file_name)
         with open(file_path, "w") as f:  # Создаем тестовый файл
             f.write("This is a test file.")
-
+        os.chmod(file_path, 0o777)
         assert os.path.exists(file_path), f"Файл {file_path} не был создан!"
         
         # 4. Загрузить файл
         upload_input = self.wait.until(EC.presence_of_element_located((By.ID, "uploadFile")))
-        # Загружаем файл
         upload_input.send_keys(file_path)
-
-        
 
         # 5. Проверить в поле с именем файла его имя
         uploaded_file_path = self.wait.until(EC.presence_of_element_located((By.ID, "uploadedFilePath"))).text

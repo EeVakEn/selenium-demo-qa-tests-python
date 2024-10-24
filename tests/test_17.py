@@ -2,6 +2,7 @@ import unittest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service 
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
@@ -11,7 +12,7 @@ class TestDemoQASlider(unittest.TestCase):
     def setUp(self):
         options = Options()
         options.page_load_strategy = 'eager'
-        self.driver = webdriver.Chrome(options=options)
+        self.driver = webdriver.Chrome(options=options, service=Service(executable_path='/usr/bin/chromedriver'))
         self.driver.get("https://demoqa.com/")
         self.wait = WebDriverWait(self.driver, 10)
 

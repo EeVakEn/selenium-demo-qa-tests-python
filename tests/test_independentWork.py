@@ -2,6 +2,7 @@ import unittest, time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service 
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
@@ -12,7 +13,7 @@ class TestDromWebsite(unittest.TestCase):
     def setUpClass(cls):
         options = Options()
         # options.add_argument("--headless")  # Запуск в фоновом режиме
-        cls.driver = webdriver.Chrome(options=options)
+        cls.driver = webdriver.Chrome(options=options, service=Service(executable_path='/usr/bin/chromedriver'))
         cls.wait = WebDriverWait(cls.driver, 15)
         cls.start_url = "https://www.drom.ru/"
 

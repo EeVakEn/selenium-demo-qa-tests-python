@@ -16,6 +16,7 @@ import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service 
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver import ActionChains
@@ -25,7 +26,7 @@ class TestButtons(unittest.TestCase):
     def setUp(self):
         options = Options()
         options.page_load_strategy = 'eager'
-        self.driver = webdriver.Chrome(options=options)  # ChromeDriver
+        self.driver = webdriver.Chrome(options=options, service=Service(executable_path='/usr/bin/chromedriver'))  # ChromeDriver
         self.driver.get("https://demoqa.com/")
         self.wait = WebDriverWait(self.driver, 10)
 
@@ -34,26 +35,18 @@ class TestButtons(unittest.TestCase):
         elements_section = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//h5[text()='Elements']")))
         elements_section.click()
 
-        
-
         # 3. Выбрать пункт 'Buttons'
         buttons_option = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//span[text()='Buttons']")))
         buttons_option.click()
-
-        
 
         # 4. Нажать на кнопку 'Click Me'
         click_me_button = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//button[text()='Click Me']")))
         click_me_button.click()
 
-        
-
         # 5. Проверить, что появилась надпись 'You have done a dynamic click'
         dynamic_click_message = self.wait.until(EC.visibility_of_element_located((By.ID, "dynamicClickMessage")))
         self.assertTrue(dynamic_click_message.is_displayed())
         self.assertEqual(dynamic_click_message.text, "You have done a dynamic click")
-
-        
 
         # 6. Сделать двойной клик на кнопку 'Double Click Me'
         double_click_button = self.wait.until(EC.element_to_be_clickable((By.ID, "doubleClickBtn")))
