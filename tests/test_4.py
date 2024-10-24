@@ -52,8 +52,9 @@ class TestButtons(unittest.TestCase):
         double_click_button = self.wait.until(EC.element_to_be_clickable((By.ID, "doubleClickBtn")))
         actions = ActionChains(self.driver)
         # Не убирать time sleep иначе дабл клик не работает 🤔
-        time.sleep(0.5)
+        time.sleep(1)
         actions.double_click(double_click_button).perform()
+        time.sleep(1)
 
         
 
@@ -66,7 +67,9 @@ class TestButtons(unittest.TestCase):
 
         # 8. Сделать клик правой кнопкой на кнопку 'Right Click Me'
         right_click_button = self.wait.until(EC.element_to_be_clickable((By.ID, "rightClickBtn")))
+        time.sleep(1)
         actions.context_click(right_click_button).perform()
+        time.sleep(1)
 
         
 

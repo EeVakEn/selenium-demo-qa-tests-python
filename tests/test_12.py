@@ -34,18 +34,18 @@ class TestDemoQANestedFrames(unittest.TestCase):
 
         # 4. Проверить наличие текста 'Child Iframe' в child frame
         # Переход в родительский фрейм по его имени или ID
-        self.driver.switch_to.frame(self.driver.find_element(By.ID, "frame1"))
+        self.wait.until(EC.frame_to_be_available_and_switch_to_it((By.ID, "frame1")))
 
         # Переход во вложенный (child) фрейм
-        self.driver.switch_to.frame(self.driver.find_element(By.TAG_NAME, "iframe"))
-        child_frame_text = self.driver.find_element(By.TAG_NAME, "p").text
+        self.wait.until(EC.frame_to_be_available_and_switch_to_it((By.TAG_NAME, "iframe")))
+        child_frame_text = self.wait.until(EC.visibility_of_element_located((By.TAG_NAME, "p"))).text
         assert child_frame_text == "Child Iframe", f"Unexpected text in child frame: {child_frame_text}"
 
         # Возврат к родительскому фрейму
         self.driver.switch_to.parent_frame()
 
         # 5. Проверить наличие текста 'Parent frame' в parent frame
-        parent_frame_text = self.driver.find_element(By.TAG_NAME, "body").text
+        parent_frame_text = self.wait.until(EC.visibility_of_element_located((By.TAG_NAME, "body"))).text
         assert "Parent frame" in parent_frame_text, f"Unexpected text in parent frame: {parent_frame_text}"
 
         # Возврат к основному контенту страницы
