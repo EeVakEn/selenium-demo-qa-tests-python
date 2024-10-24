@@ -109,7 +109,7 @@ class TestDemoQABookStore(unittest.TestCase):
         self.assertIn("Passwords must have at least one non alphanumeric character", error_message)
         
         # 18. Заполнить Password валидным значением
-        valid_password = "Valid1!"
+        valid_password = "Valid1!@321"
         self.wait.until(EC.visibility_of_element_located((By.XPATH, "//input[@id='password']"))).clear()
         self.wait.until(EC.visibility_of_element_located((By.XPATH, "//input[@id='password']"))).send_keys(valid_password)
 
